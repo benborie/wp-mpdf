@@ -131,10 +131,9 @@ function mpdf_output( $wp_content = '', $do_pdf = false, $outputToBrowser = true
 			@mkdir( $cacheDirectory . 'tmp' );
 		}
 
-		define( '_MPDF_PATH', dirname( __FILE__ ) . '/mpdf/' );
 		define( '_MPDF_TEMP_PATH', $cacheDirectory . 'tmp/' );
 		define( '_MPDF_TTFONTDATAPATH', _MPDF_TEMP_PATH );
-		require_once( _MPDF_PATH . 'mpdf.php' );
+		require_once( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' );
 
 		global $pdf_margin_left;
 		global $pdf_margin_right;
@@ -186,12 +185,18 @@ function mpdf_output( $wp_content = '', $do_pdf = false, $outputToBrowser = true
 			$cp = get_option( 'mpdf_code_page' );
 		}
 
-		$mpdf = new mPDF( $cp, $pdf_format, '', '', $pdf_margin_left, $pdf_margin_right, $pdf_margin_top, $pdf_margin_bottom, $pdf_margin_header, $pdf_margin_footer, $pdf_orientation );
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => $cp,
+			'format' => $pdf_format,
+			'orientation' => $pdf_orientation,
+			'margin_left' => $pdf_margin_left,
+			'margin_right' => $pdf_margin_right,
+			'margin_top' => $pdf_margin_top,
+			'margin_bottom' => $pdf_margin_bottom,
+			'margin_header' => $pdf_margin_header,
+			'margin_footer' => $pdf_margin_footer,
+		]);#mpdf
 
-		$mpdf->SetUserRights();
-		$mpdf->title2annots = false;
-		//$mpdf->annotMargin = 12;
-		$mpdf->use_embeddedfonts_1252 = true;    // false is default
 		$mpdf->SetBasePath( $templatePath );
 
 		//Set PDF Template if it's set
@@ -199,18 +204,16 @@ function mpdf_output( $wp_content = '', $do_pdf = false, $outputToBrowser = true
 		global $pdf_template_pdfpage_page;
 		global $pdf_template_pdfdoc;
 		if ( isset( $pdf_template_pdfdoc ) && $pdf_template_pdfdoc != '' ) {
-			$mpdf->SetImportUse();
 			$mpdf->SetDocTemplate( $templatePath . $pdf_template_pdfdoc, true );
 		} else if ( isset( $pdf_template_pdfpage ) && $pdf_template_pdfpage != '' && isset( $pdf_template_pdfpage_page ) && is_numeric( $pdf_template_pdfpage_page ) ) {
-			$mpdf->SetImportUse();
-			$pagecount = $mpdf->SetSourceFile( $templatePath . $pdf_template_pdfpage );
+			$pagecount = $mpdf->setSourceFile( $templatePath . $pdf_template_pdfpage );
 			if ( $pdf_template_pdfpage_page < 1 ) {
 				$pdf_template_pdfpage_page = 1;
 			} else if ( $pdf_template_pdfpage_page > $pagecount ) {
 				$pdf_template_pdfpage_page = $pagecount;
 			}
-			$tplId = $mpdf->ImportPage( $pdf_template_pdfpage_page );
-			$mpdf->UseTemplate( $tplId );
+			$tplId = $mpdf->importPage( $pdf_template_pdfpage_page );
+			$mpdf->useTemplate( $tplId );
 		}
 
 
@@ -226,12 +229,12 @@ function mpdf_output( $wp_content = '', $do_pdf = false, $outputToBrowser = true
 		if ( $pdf_html_header ) {
 			$mpdf->SetHTMLHeader( $pdf_header );
 		} else {
-			$mpdf->setHeader( $pdf_header );
+			$mpdf->SetHeader( $pdf_header );
 		}
 		if ( $pdf_html_footer ) {
 			$mpdf->SetHTMLFooter( $pdf_footer );
 		} else {
-			$mpdf->setFooter( $pdf_footer );
+			$mpdf->SetFooter( $pdf_footer );
 		}
 
 

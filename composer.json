@@ -1,0 +1,7 @@
+{
+    "name": "fkrauthan/wp-mpdf",
+    "description": "Print Wordpress posts as PDF. Optional with Geshi highlighting.",
+    "require": {
+        "mpdf/mpdf": "8.0.10"
+    }
+}
