@@ -195,7 +195,7 @@ function mpdf_output( $wp_content = '', $do_pdf = false, $outputToBrowser = true
 			'margin_bottom' => $pdf_margin_bottom,
 			'margin_header' => $pdf_margin_header,
 			'margin_footer' => $pdf_margin_footer,
-		]);#mpdf
+		]);
 
 		$mpdf->SetBasePath( $templatePath );
 
