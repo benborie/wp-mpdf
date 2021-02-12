@@ -131,8 +131,6 @@ function mpdf_output( $wp_content = '', $do_pdf = false, $outputToBrowser = true
 			@mkdir( $cacheDirectory . 'tmp' );
 		}
 
-		define( '_MPDF_TEMP_PATH', $cacheDirectory . 'tmp/' );
-		define( '_MPDF_TTFONTDATAPATH', _MPDF_TEMP_PATH );
 		require_once( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' );
 
 		global $pdf_margin_left;
@@ -186,6 +184,7 @@ function mpdf_output( $wp_content = '', $do_pdf = false, $outputToBrowser = true
 		}
 
 		$mpdf = new \Mpdf\Mpdf([
+			'tempDir' => $cacheDirectory . 'tmp/',
 			'mode' => $cp,
 			'format' => $pdf_format,
 			'orientation' => $pdf_orientation,
