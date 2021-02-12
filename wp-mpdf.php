@@ -147,7 +147,8 @@ function mpdf_output( $wp_content = '', $do_pdf = false, $outputToBrowser = true
 		if ( $pdf_format == '' ) {
 			$pdf_format = 'A4';
 		}
-
+		
+		// Set margin defaults
 		if ( $pdf_margin_left !== 0 && $pdf_margin_left == '' ) {
 			$pdf_margin_left = 15;
 		}
@@ -173,17 +174,19 @@ function mpdf_output( $wp_content = '', $do_pdf = false, $outputToBrowser = true
 			$pdf_html_footer = false;
 		}
 
+		// Set orientation default
 		global $pdf_orientation;
 		if ( $pdf_orientation == '' ) {
 			$pdf_orientation = 'P';
 		}
-
+		
+		// Set code page default
 		$cp = 'utf-8';
 		if ( get_option( 'mpdf_code_page' ) != '' ) {
 			$cp = get_option( 'mpdf_code_page' );
 		}
-
-		$mpdf = new \Mpdf\Mpdf([
+		
+		$args = [
 			'tempDir' => $cacheDirectory . 'tmp/',
 			'mode' => $cp,
 			'format' => $pdf_format,
@@ -194,7 +197,33 @@ function mpdf_output( $wp_content = '', $do_pdf = false, $outputToBrowser = true
 			'margin_bottom' => $pdf_margin_bottom,
 			'margin_header' => $pdf_margin_header,
 			'margin_footer' => $pdf_margin_footer,
-		]);
+		];
+		
+		// Add custom fonts
+		global $pdf_fontdir; // path to custom fonts
+		global $pdf_fontdata; // config array, see https://mpdf.github.io/fonts-languages/fonts-in-mpdf-7-x.html
+		global $pdf_default_font; // string, default font, ex: "frutiger"
+		
+		if( $pdf_fontdir && $pdf_fontdata ){
+			
+			// Get default font config and add custom directory
+			$defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
+			$fontDirs = $defaultConfig['fontDir'];
+			$args['fontDir'] = array_merge($fontDirs, [$pdf_fontdir]);
+			
+			// Add custom fontdata
+			$defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
+			$fontData = $defaultFontConfig['fontdata'];
+			$args['fontdata'] = $fontData + $pdf_fontdata;
+			
+			// Set default font
+			if( $pdf_default_font ){
+				$args['default_font'] = $pdf_default_font;
+			}
+			
+		}
+		
+		$mpdf = new \Mpdf\Mpdf($args);
 
 		$mpdf->SetBasePath( $templatePath );
 
