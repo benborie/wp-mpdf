@@ -96,6 +96,28 @@ class FontVariables
 				"prata" => [
 					'R' => "Prata-Regular.ttf",
 				],
+				"sourcesanspro" => [
+					'R' => "SourceSansPro-Regular.ttf",
+					'B' => "SourceSansPro-Bold.ttf",
+					'I' => "SourceSansPro-Italic.ttf",
+					'BI' => "SourceSansPro-BoldItalic.ttf",
+				],
+				"sourcesansproblack" => [
+					'R' => "SourceSansPro-Black.ttf",
+					'I' => "SourceSansPro-BlackItalic.ttf",
+				],
+				"sourcesansprolight" => [
+					'R' => "SourceSansPro-Light.ttf",
+					'I' => "SourceSansPro-LightItalic.ttf",
+				],
+				"sourcesansproextralight" => [
+					'R' => "SourceSansPro-ExtraLight.ttf",
+					'I' => "SourceSansPro-ExtraLightItalic.ttf",
+				],
+				"sourcesansprosemibold" => [
+					'R' => "SourceSansPro-SemiBold.ttf",
+					'I' => "SourceSansPro-SemiBoldItalic.ttf",
+				],				
 				"lora" => [
 					'R' => "Lora-Regular.ttf",
 					'B' => "Lora-Bold.ttf",
