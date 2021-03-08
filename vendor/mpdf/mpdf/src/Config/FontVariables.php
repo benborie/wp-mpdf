@@ -93,6 +93,23 @@ class FontVariables
 			 */
 
 			'fontdata' => [
+				"prata" => [
+					'R' => "Prata-Regular.ttf",
+				],
+				"lora" => [
+					'R' => "Lora-Regular.ttf",
+					'B' => "Lora-Bold.ttf",
+					'I' => "Lora-Italic.ttf",
+					'BI' => "Lora-BoldItalic.ttf",
+				],
+				"loramedium" => [
+					'R' => "Lora-Medium.ttf",
+					'I' => "Lora-MediumItalic.ttf",
+				],
+				"lorasemibold" => [
+					'R' => "Lora-SemiBold.ttf",
+					'I' => "Lora-SemiBoldItalic.ttf",
+				],
 				"dejavusanscondensed" => [
 					'R' => "DejaVuSansCondensed.ttf",
 					'B' => "DejaVuSansCondensed-Bold.ttf",
