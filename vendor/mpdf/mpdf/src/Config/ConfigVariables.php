@@ -251,10 +251,12 @@ class ConfigVariables
 			'footer_line_spacing' => 0.25,
 			// If 'pad' margin-top sets fixed distance in mm (padding) between bottom of header and top of text.
 			// If 'stretch' margin-top sets a minimum distance in mm between top of page and top of text, which expands if header is too large to fit.
-			'setAutoTopMargin' => false,
-			'setAutoBottomMargin' => false,
+			'setAutoTopMargin' => 'stretch',
+			//'setAutoTopMargin' => false,
+			'setAutoBottomMargin' => 'stretch',
+			//'setAutoBottomMargin' => false,
 			// distance in mm used as padding if 'stretch' mode is used
-			'autoMarginPadding' => 2,
+			'autoMarginPadding' => 0,
 
 			// TABLES
 			// Forces all cells to have same border, background etc. Improves performance

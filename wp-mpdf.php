@@ -143,7 +143,10 @@ function mpdf_output( $wp_content = '', $do_pdf = false, $outputToBrowser = true
 		global $pdf_html_header;
 		global $pdf_html_footer;
 
+		
 		global $pdf_format;
+		global $barnes_options; 
+		if (isset($barnes_options['pdf_page_format'])) { $pdf_format = $barnes_options['pdf_page_format']; }
 		if ( $pdf_format == '' ) {
 			$pdf_format = 'A4';
 		}
